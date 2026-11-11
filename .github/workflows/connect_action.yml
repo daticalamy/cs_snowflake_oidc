@@ -1,4 +1,4 @@
-name: 'Liquibase Secure Connect'
+name: 'Liquibase Secure Connect for Snowflake OIDC (Workload Identity Federation)'
 run-name: ${{ inputs.environment }} connect of current repo by ${{ github.actor }}
 
 on:
