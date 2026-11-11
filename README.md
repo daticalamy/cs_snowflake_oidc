@@ -184,9 +184,6 @@ Key requirements for .github\workflows\connect_action.yml:
 | `Driver class was not specified and could not be determined from the url (&token=***` | `vars.LIQUIBASE_URL` is empty or not found | Create `LIQUIBASE_URL` as a **variable** (not a secret) in the repository or in the environment the job uses |
 | Snowflake authentication failure after the URL is fixed | Token `sub` doesn't match the user's `SUBJECT` | Copy the exact `sub` from the workflow output and `ALTER USER ... SET WORKLOAD_IDENTITY` (1.3) |
 | Token step returns `null` or empty | Missing `permissions: id-token: write` | Add it at the workflow or job level |
-| Run never starts, or no **Run workflow** button | Workflow not on default branch, YAML error, or Actions disabled | Check the Actions tab for errors and confirm the file is in `.github/workflows/` on the default branch |
-| Run stuck at "Waiting" | Environment protection rule | Approve via **Review deployments** |
-| Run stuck at "Queued" while the runner shows Idle | Runner registered to a different repo/org, or a stale queue | Confirm runner registration, cancel, and re-run |
 | Driver complains about a missing user | Driver requires a user for your configuration | Append `&user=LB_WIF_TEST_USER` to `LIQUIBASE_URL` |
 | WIF authenticator not recognized | Old Snowflake JDBC driver | Confirm `internal/lib/snowflake-jdbc*.jar` is 3.26.0 or later |
 
