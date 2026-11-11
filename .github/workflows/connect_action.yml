@@ -1,0 +1,56 @@
+#############################################################################
+#  GitHub Action to test a Snowflake OIDC connection
+##############################################################################
+name: 'Liquibase Secure Connect'
+run-name: ${{ inputs.environment}} connect of current repo by ${{ github.actor }}
+
+on:
+  workflow_dispatch:
+    # Following are the inputs received via the GitHubActions Run workflow dialog
+    inputs:
+    
+      # The type 'environment' will automatically pull in the environments created in GitHub
+      environment:
+        description: 'Environment for build'
+        type: environment
+        required: true
+        default: DEV
+
+####################################################################
+#  Set up the environment
+#####################################################################
+env:
+  # Secure License key
+  LIQUIBASE_LICENSE_KEY: ${{ secrets.LIQUIBASE_LICENSE_KEY }}
+
+  # JDBC URL of the database per environment
+  # See https://docs.liquibase.com/workflows/liquibase-community/using-jdbc-url-in-liquibase.html
+  LIQUIBASE_COMMAND_URL: ${{ vars.LIQUIBASE_URL }}
+
+  # Credentials for the environment's database https://docs.liquibase.com/parameters/command-parameters.html
+  LIQUIBASE_COMMAND_USERNAME: ${{ secrets.LIQUIBASE_USERNAME }}
+  LIQUIBASE_COMMAND_PASSWORD: ${{ secrets.LIQUIBASE_PASSWORD }}
+  
+  # The database changelog. See https://docs.liquibase.com/concepts/changelogs/working-with-changelogs.html
+  LIQUIBASE_COMMAND_CHANGELOG_FILE: changelog.yaml
+  ENVIRONMENT: ${{ inputs.environment }}
+  
+  # Values: OFF, SEVERE, WARNING, INFO, FINE
+  LIQUIBASE_LOG_LEVEL: INFO
+  LIQUIBASE_LOG_FORMAT: JSON_PRETTY
+  LIQUIBASE_LOG_FILE: logs/log.json
+
+jobs:
+  #########################################################################
+  #  Connect
+  #########################################################################
+
+  database-connect:
+    runs-on: [self-hosted]
+    environment: ${{ inputs.environment }}
+    steps:    
+    - name: Setup Liquibase Environment
+      uses: ./.github/workflows/setup-liquibase
+
+    - name: Liquibase Connect
+      run: liquibase connect

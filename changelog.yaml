@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: wif-test-1
+      author: wif-test
+      changes:
+        - createTable:
+            tableName: WIF_SMOKE_TEST
+            columns:
+              - column:
+                  name: ID
+                  type: INT
+              - column:
+                  name: NOTE
+                  type: VARCHAR(100)
