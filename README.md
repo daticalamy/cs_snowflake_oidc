@@ -171,9 +171,8 @@ Key requirements for .github\workflows\connect_action.yml:
 
 ### 2.5 Run it
 
-1. Make sure the workflow file is on the **default branch**. The **Run workflow** button only appears for workflows on the default branch.
-2. Go to **Actions → Liquibase Secure Connect → Run workflow**, choose the environment, and run it.
-3. A successful run shows the Liquibase connection succeeding. The login also appears in Snowflake's `LOGIN_HISTORY`.
+1. Go to **Actions → Liquibase Secure Connect → Run workflow**, choose the environment, and run it.
+2. A successful run shows the Liquibase connection succeeding. The login also appears in Snowflake's `LOGIN_HISTORY`.
 
 ---
 
