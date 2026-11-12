@@ -159,7 +159,8 @@ If you add protection rules, such as required reviewers, runs will pause for app
 jdbc:snowflake://<org>-<account>.snowflakecomputing.com/?authenticator=WORKLOAD_IDENTITY&workloadIdentityProvider=OIDC&db=LB_WIF_TEST&schema=PUBLIC&warehouse=LB_WIF_TEST_WH&role=LB_WIF_TEST_ROLE
 ```
 
-Don't store the token in the variable. OIDC tokens are short-lived and issued per run, so the workflow fetches a fresh one and appends `&token=<token>` at runtime. No database username or password is needed.
+Don't store the token in the variable. OIDC tokens are short-lived and issued per run, so the workflow fetches a fresh one and appends `&token=<token>` at runtime. No database username or password is needed. Within the connect_action.yml the LIQUIBASE URL looks like:
+`LIQUIBASE_COMMAND_URL: ${{ vars.LIQUIBASE_URL }}&token=${{ env.OIDC_TOKEN }}`
 
 ### 2.4 The workflow
 
